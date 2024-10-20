@@ -1,6 +1,6 @@
 import { User } from "../models/user.model.js"
 import bcrypt from "bcryptjs"
-import { generateVerificationCode } from "../utils/generateVerificationCode.js"
+import {  } from "../utils/generateTokenAndSetCookie.js"
 class App {
     // ====== SignUp
     signup = async (req, res) => {
@@ -21,7 +21,7 @@ class App {
             // =========== 
             const genSalt = await bcrypt.genSalt(10)
             const hashPassword = await bcrypt.hash(password, genSalt)
-            const verificationToken = generateVerificationCode()
+            const verificationToken = Math.floor(100000 + Math.random() * 900000).toString()
             const user = new User({
                 email, 
                 password: hashPassword,
@@ -29,7 +29,10 @@ class App {
                 verificationToken,
                 verificationTokenExpiresAt: Date.now() + 24 * 60 * 60* 1000 // 24 hours
             })
-            await user.save()
+            await user.save();
+
+            // ========= jwt
+            generateTokenAndSetCookie(res, user._id)
         }catch (err) {
             res.status(400).json({
                 success: false,
