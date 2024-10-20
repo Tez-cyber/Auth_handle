@@ -6,14 +6,15 @@ dotenv.config()
 const app = express()
 
 
+// ================= Middlewares
+app.use(express.json())
+
 // ================= routes
 import authRoutes from "./routes/auth.route.js"
 app.use("/api/auth", authRoutes)
-app.get("/", (req, res) => {
-    res.send("Hello World")
-})
 
-// ============
+
+// ============ 
 
 const PORT = process.env.PORT || 8080
 app.listen(PORT, () => {
