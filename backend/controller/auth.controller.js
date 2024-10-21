@@ -1,6 +1,6 @@
 import { User } from "../models/user.model.js"
 import bcrypt from "bcryptjs"
-import {  } from "../utils/generateTokenAndSetCookie.js"
+import { generateTokenAndSetCookie } from "../utils/generateTokenAndSetCookie.js"
 class App {
     // ====== SignUp
     signup = async (req, res) => {
@@ -33,6 +33,14 @@ class App {
 
             // ========= jwt
             generateTokenAndSetCookie(res, user._id)
+            res.status(201).json({
+                success: true,
+                message: "User created successfully",
+                user: {
+                    ...user._doc,
+                    password: undefined
+                }
+            })
         }catch (err) {
             res.status(400).json({
                 success: false,
