@@ -89,7 +89,42 @@ class App {
     
     // ====== SignUp
     login = async (req, res) => {
-        res.send("SignUp page")
+        const { email, password } = req.body
+
+        try {
+            const user = await User.findOne({ email })
+            if(!user) {
+                return res.status(400).json({
+                    success: false,
+                    message: "Invalid credentials"
+                })
+            }
+            const isPasswordValid = await bcrypt.compare(password, user.password)
+            if(!isPasswordValid) {
+                return res.status(400).json({
+                    success: false,
+                    message: "Invalid password"
+                })
+            }
+            // ======== generate token and set cookie if credentials are correct
+            generateTokenAndSetCookie(res, user._id)
+
+            user.lastLogin = new Date();
+            await user.save()
+
+            res.status(200).json({
+                success: true,
+                message: "Logged in successfully",
+                user: {
+                    ...user._doc,
+                    password: undefined
+                }
+            })
+
+        }catch(err) {
+            console.log("Error Logging in", err);
+            res.status(500).json({ success: false, message: "Login error" });
+        }
     }
     
     // ====== Logout
