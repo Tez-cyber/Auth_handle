@@ -1,7 +1,8 @@
 import { User } from "../models/user.model.js"
 import bcrypt from "bcryptjs"
+import crypto from "crypto"
 import { generateTokenAndSetCookie } from "../utils/generateTokenAndSetCookie.js"
-import { sendVerificationEmail, sendWelcomeEmail } from "../mailtrap/emails.js"
+import { sendPasswordResetEmail, sendVerificationEmail, sendWelcomeEmail } from "../mailtrap/emails.js"
 class App {
     // ====== SignUp
     signup = async (req, res) => {
@@ -87,7 +88,7 @@ class App {
         }
     };
     
-    // ====== SignUp
+    // ====== Login
     login = async (req, res) => {
         const { email, password } = req.body
 
@@ -124,6 +125,42 @@ class App {
         }catch(err) {
             console.log("Error Logging in", err);
             res.status(500).json({ success: false, message: "Login error" });
+        }
+    }
+
+    // ======== Forgot Password
+    forgotPassword = async (req, res) => {
+        const { email } = req.body
+        try {
+            const user = await User.findOne({ email })
+
+            if(!user) {
+                return res.status(400).json({
+                    success: false,
+                    message: "Email doesnt exist"
+                })
+            }
+
+            // Generate reset token
+            const resetToken = crypto.randomBytes(20).toString("hex")
+            const resetTokenExpiresAt = Date.now() + 1 * 60 * 60 * 1000 // Expires in 1 hr
+
+            // ========== set user reset Token
+            user.resetPasswordToken = resetToken
+            user.resetPasswordTokenExpiresAt = resetTokenExpiresAt
+
+            await user.save()
+
+            // send email with user token....
+            await sendPasswordResetEmail(user.email, `${process.env.CLIENT_URL}/reset-password/${resetToken}`)
+
+            res.status(200).json({
+                success: true,
+                message: "Passwors reset link sent to your email"
+            })
+        }catch(err) {
+            console.log("Server Error", err)
+            res.status(500).json({ success: false, message: err.message });
         }
     }
     

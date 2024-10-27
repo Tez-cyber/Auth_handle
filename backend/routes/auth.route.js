@@ -6,6 +6,7 @@ import authController from "../controller/auth.controller.js"
 router.post("/signup", authController.signup)
 router.post("/verify-email", authController.verifyEmail)
 router.post("/login", authController.login)
+router.post("/forgot-password", authController.forgotPassword)
 router.post("/logout", authController.logout)
 
 
