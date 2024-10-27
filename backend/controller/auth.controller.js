@@ -92,9 +92,13 @@ class App {
         res.send("SignUp page")
     }
     
-    // ====== SignUp
+    // ====== Logout
     logout = async (req, res) => {
-        res.send("SignUp page")
+        res.clearCookie("token")
+        res.status(200).json({
+            success: true,
+            message: "Logged out successfully"
+        })
     }
     
 }
