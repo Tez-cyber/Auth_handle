@@ -2,7 +2,9 @@ import express from "express"
 const router = express.Router()
 
 import authController from "../controller/auth.controller.js"
+import { verifyToken } from "../middleware/verifyToken.js"
 
+router.get("/check-auth", verifyToken, authController.checkAuth)
 router.post("/signup", authController.signup)
 router.post("/verify-email", authController.verifyEmail)
 router.post("/login", authController.login)
