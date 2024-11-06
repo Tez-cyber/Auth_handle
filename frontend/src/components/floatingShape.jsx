@@ -1,7 +1,7 @@
 import React from 'react'
 
-export const floatingShape = () => {
+export const FloatingShape = () => {
   return (
-    <div>floatingShape</div>
+    <div>F</div>
   )
 }
