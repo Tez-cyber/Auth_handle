@@ -1,7 +1,24 @@
-import React from 'react'
+import { motion }from 'framer-motion'
 
-export const FloatingShape = () => {
+export const FloatingShape = ({ color, size, top, left, delay }) => {
   return (
-    <div>F</div>
+    <motion.div
+        className={
+            `absolute rounded-full ${color} ${size} opacity-20 blur-md`
+        }
+        style={{ left, top }}
+        animate={{
+            y: ["0%", "100%", "0%"],
+            x: ["0%", "100%", "0%"],
+            rotate: [0, 360],
+        }}
+        transition={{
+            duration: 20,
+            ease: "linear",
+            repeat: Infinity,
+            delay
+        }}
+        aria-hidden="true"
+    />
   )
 }
