@@ -65,14 +65,14 @@ export const PasswordStrength = ({ password }) => {
     }
     return (
         <div className="mt-2">
-            <div className="flex justify-center items-center mb-1">
+            <div className="flex justify-between items-center mb-1">
                 <span className="text-xs text-gray-400">Password strength</span>
                 <span className="text-xs text-gray-400">{getStrengthText(strength)}</span>
             </div>
             <div className="flex space-x-1">
                 {[...Array(4)].map((_, i) => (
                     <div
-                        key={index}
+                        key={i}
                         className={`h-1 w-1/4 rounded-full transition-colors duration-300
                                 ${i < strength ? getColor(strength) : "bg-gray-600"}
                             `}
