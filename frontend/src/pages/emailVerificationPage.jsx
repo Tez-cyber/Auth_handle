@@ -44,7 +44,7 @@ export const EmailVerificationPage = () => {
         e.preventDefault()
 
         const verificationCode = code.join("");
-        alert(`Verification code entered: ${verificationCode}`);
+        console.log(`Verification code entered: ${verificationCode}`);
     }
 
     // Auto submit when all fields are filled
