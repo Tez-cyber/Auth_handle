@@ -41,7 +41,11 @@ export const LoginPage = () => {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
-
+          <div className="flex items-center mb-6">
+            <Link to="/forgot-password" className='text-sm text-green-400 hover:underline'>
+              Forgot password?
+            </Link>
+          </div>
           <motion.button
             className="mt-5 w-full py-3 px-4 bg-gradient-to-r from-green-500 to-emerald-500 text-white
                     font-bold rounded-lg shadow-lg hover:from-green-600 hover:to-emerald-700 focus:outline-none
@@ -51,13 +55,13 @@ export const LoginPage = () => {
             whileTap={{ scale: 0.98 }}
             type="submit"
           >
-            Sign Up
+            Login 
           </motion.button>
         </form>
       </div>
       <div className="px-8 py-4 bg-gray-900 bg-opacity-50 flex justify-center">
         <p className="text-sm text-gray-400">
-          Dont have an account? {" "}
+          Don't have an account? {" "}
           <Link to={"/signup"} className=" text-green-400 hover:underline">Sign up</Link>
         </p>
       </div>
