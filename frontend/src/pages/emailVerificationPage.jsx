@@ -1,4 +1,4 @@
-import { useRef, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { motion } from "framer-motion";
 
@@ -36,9 +36,23 @@ export const EmailVerificationPage = () => {
     }
     const handleKeyDown = (i, e) => {
         if (e.key === "Backspace" && !code[i] && i > 0) {
-            inputRefs.current[index - 1].focus()
+            inputRefs.current[i - 1].focus()
         }
     }
+
+    const handleSubmit = (e) => {
+        e.preventDefault()
+
+        const verificationCode = code.join("");
+        alert(`Verification code entered: ${verificationCode}`);
+    }
+
+    // Auto submit when all fields are filled
+    useEffect(() => {
+        if (code.every(digit => digit !== "")) {
+            handleSubmit(new Event('submit'))
+        }
+    }, [code]) 
 
     return (
         <div className="max-w-md w-full bg-gray-800 bg-opacity-50 backdrop-filter backdrop-blur-xl
