@@ -7,6 +7,7 @@ import { Link } from 'react-router-dom';
 export const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const isLoading = false
 
 
   const handleLogin = (e) => {
@@ -54,8 +55,11 @@ export const LoginPage = () => {
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
             type="submit"
+            disabled={isLoading}
           >
-            Login 
+            {
+              isLoading ? <Loader className='size-6 animate-spin mx-auto' /> : "Login"
+            }
           </motion.button>
         </form>
       </div>
