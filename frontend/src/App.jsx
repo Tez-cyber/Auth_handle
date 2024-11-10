@@ -3,6 +3,7 @@ import { Route, Routes } from "react-router-dom"
 import { SignupPage } from "./pages/signupPage"
 import { LoginPage } from "./pages/loginPage"
 import { EmailVerificationPage } from "./pages/emailVerificationPage"
+import { Toaster } from "react-hot-toast"
 
 function App() {
 
@@ -31,6 +32,7 @@ function App() {
           <Route path="/login" element={<LoginPage />} />
           <Route path="/verify-email" element={<EmailVerificationPage />} />
         </Routes>
+        <Toaster />
       </div>
     </>
   )
