@@ -7,6 +7,21 @@ import { Toaster } from "react-hot-toast"
 import { useAuthStore } from "./store/authStore"
 import { useEffect } from "react"
 
+//protect routes that require auth
+const ProtectedRoute = ({ children }) => {
+  const { isAuthenticated, user } = useAuthStore
+
+  if(!isAuthenticated) {
+    return <Navigate to={"/login"} replace />
+  }
+
+  if(!user.isVerified) {
+    return <Navigate to={"/verify-email"} replace />
+  }
+
+  return children
+}
+
 // redirect users to homepage
 const RedirectAuthenticatedUser = ({ children }) => {
   const { isAuthenticated, user } = useAuthStore();
