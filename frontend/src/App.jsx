@@ -1,15 +1,18 @@
 import { FloatingShape } from "./components/floatingShape"
-import { Navigate, Route, Routes } from "react-router-dom"
+import { Toaster } from "react-hot-toast"
+
 import { SignupPage } from "./pages/signupPage"
 import { LoginPage } from "./pages/loginPage"
 import { EmailVerificationPage } from "./pages/emailVerificationPage"
-import { Toaster } from "react-hot-toast"
+import { DashboardPage } from "./pages/dashboardPage"
+
 import { useAuthStore } from "./store/authStore"
 import { useEffect } from "react"
+import { Navigate, Route, Routes } from "react-router-dom"
 
 //protect routes that require auth
 const ProtectedRoute = ({ children }) => {
-  const { isAuthenticated, user } = useAuthStore
+  const { isAuthenticated, user } = useAuthStore()
 
   if(!isAuthenticated) {
     return <Navigate to={"/login"} replace />
@@ -66,7 +69,11 @@ function App() {
         />
 
         <Routes>
-          <Route path="/" element={"Home page"} />
+          <Route path="/" element={
+            <ProtectedRoute>
+              <DashboardPage />
+            </ProtectedRoute>
+          } />
           <Route path="/signup" element={
             <RedirectAuthenticatedUser>
               <SignupPage />
