@@ -57,7 +57,11 @@ function App() {
               <SignupPage />
             </RedirectAuthenticatedUser>
           } />
-          <Route path="/login" element={<LoginPage />} />
+          <Route path="/login" element={
+            <RedirectAuthenticatedUser>
+              <LoginPage />
+            </RedirectAuthenticatedUser>
+          } />
           <Route path="/verify-email" element={<EmailVerificationPage />} />
         </Routes>
         <Toaster />
