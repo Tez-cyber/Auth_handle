@@ -1,5 +1,6 @@
 import { FloatingShape } from "./components/floatingShape"
-import { Toaster } from "react-hot-toast"
+import { LoadingSpinner } from "./components/loadingSpinner"
+
 
 import { SignupPage } from "./pages/signupPage"
 import { LoginPage } from "./pages/loginPage"
@@ -9,6 +10,8 @@ import { DashboardPage } from "./pages/dashboardPage"
 import { useAuthStore } from "./store/authStore"
 import { useEffect } from "react"
 import { Navigate, Route, Routes } from "react-router-dom"
+import { Toaster } from "react-hot-toast"
+
 
 //protect routes that require auth
 const ProtectedRoute = ({ children }) => {
@@ -37,18 +40,15 @@ const RedirectAuthenticatedUser = ({ children }) => {
 }
 
 function App() {
-  const { checkAuth, isCheckingAuth, isAuthenticated, user } = useAuthStore()
+  const { checkAuth, isCheckingAuth, isAuthenticated } = useAuthStore()
 
   useEffect(() => {
     checkAuth()
   }, [checkAuth])
 
-  console.log({
-    "isAuthenticated": isAuthenticated,
-    "user": user
-  }
+  if(isCheckingAuth) return <LoadingSpinner />;
+  console.log(`isAuthenticated: ${isAuthenticated}`)
 
-  )
   return (
     <>
       <div className="min-h-screen bg-gradient-to-br p-5

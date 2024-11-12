@@ -65,6 +65,7 @@ export const useAuthStore = create(set => ({
     },
 
     checkAuth: async () => {
+        await new Promise((resolve) => setTimeout(resolve, 2000)) // loading effect
         set({ isCheckingAuth: true, error: null });
 
         try {
