@@ -12,6 +12,7 @@ import { useEffect } from "react"
 import { Navigate, Route, Routes } from "react-router-dom"
 import { Toaster } from "react-hot-toast"
 import { ForgotPasswordPage } from "./pages/forgotPasswordPage"
+import { ResetPasswordPage } from "./pages/resetPasswordPage"
 
 
 //protect routes that require auth
@@ -91,6 +92,13 @@ function App() {
               <ForgotPasswordPage />
             </RedirectAuthenticatedUser>
           } />
+          <Route path="/reset-password/:token" element={
+            <RedirectAuthenticatedUser>
+              <ResetPasswordPage />
+            </RedirectAuthenticatedUser>
+          }
+
+          />
         </Routes>
         <Toaster />
       </div>
