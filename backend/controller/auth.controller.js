@@ -204,7 +204,7 @@ class App {
     // ======= Check Auth status
     checkAuth = async (req, res) => {
         try {
-            const user = await User.findById(req.userId).select("-password")
+            const user = await User.findById(req.userId).select("-password") // Do not include password
             if(!user) {
                 return res.status(400).json({ 
                     success: false, 
