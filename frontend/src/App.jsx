@@ -11,6 +11,7 @@ import { useAuthStore } from "./store/authStore"
 import { useEffect } from "react"
 import { Navigate, Route, Routes } from "react-router-dom"
 import { Toaster } from "react-hot-toast"
+import { ForgotPasswordPage } from "./pages/forgotPasswordPage"
 
 
 //protect routes that require auth
@@ -85,6 +86,11 @@ function App() {
             </RedirectAuthenticatedUser>
           } />
           <Route path="/verify-email" element={<EmailVerificationPage />} />
+          <Route path="/forgot-password" element={
+            <RedirectAuthenticatedUser>
+              <ForgotPasswordPage />
+            </RedirectAuthenticatedUser>
+          } />
         </Routes>
         <Toaster />
       </div>
