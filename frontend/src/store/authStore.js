@@ -1,7 +1,7 @@
 import { create } from 'zustand'
 import axios from "axios"
 
-const API_URL = "http://localhost:9090/api/auth";
+const API_URL = import.meta.env.MODE === "development" ?  "http://localhost:9090/api/auth" : "/api/auth";
 axios.defaults.withCredentials = true; // For every req, axios puts the cookies in the req.header
 
 export const useAuthStore = create(set => ({
